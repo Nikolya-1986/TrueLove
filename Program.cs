@@ -6,12 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddDbContext<TrueLoveDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TrueLoveConnection")));
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<TrueLoveDbContext>();
-
-// builder.Services.ConfigureApplicationCookie(config => {
-//     config.LoginPath = "/Login";
-// });
+builder.Services.ConfigureApplicationCookie(config => {
+    config.LoginPath = "/Login";
+});
 
 var app = builder.Build();
 
@@ -25,13 +25,13 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
-app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Auth}/{action=Login}/{id?}");
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
