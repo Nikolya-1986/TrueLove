@@ -1,3 +1,4 @@
+using Love.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,5 +17,7 @@ namespace Love.DbContext
         {
             base.OnModelCreating(modelBuilder);
         }
+
+        // public DbSet<MainUserInfo>? MainUserInfo { get; set; }
     }
 }

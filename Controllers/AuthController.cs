@@ -1,3 +1,5 @@
+using Love.DbContext;
+using Love.Models;
 using Love.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -10,11 +12,12 @@ namespace Love.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-
-        public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        private readonly TrueLoveDbContext _trueLoveDbContext;
+        public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, TrueLoveDbContext trueLoveDbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _trueLoveDbContext = trueLoveDbContext;
         }
     
         [HttpGet]
@@ -34,10 +37,16 @@ namespace Love.Controllers
                     Email = model.Email,
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
-
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, false);
+                    var mainUserInfo =  new MainUserInfo()
+                    {
+                        userId = Guid.NewGuid(),
+                        userEmail = model.Email,
+                        userName = model.Name,
+                    };
+                    // _trueLoveDbContext.MainUserInfo.Add(mainUserInfo);
                     return RedirectToAction("index", "Home");
                 }
                 
