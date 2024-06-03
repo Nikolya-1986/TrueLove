@@ -3,27 +3,27 @@ using Microsoft.AspNetCore.Mvc;
 using Love.Models;
 using Microsoft.AspNetCore.Authorization;
 using Love.ViewModels;
-// using Love.interfaces;
+using Love.interfaces;
 
 namespace Love.Controllers;
 
 public class HomeController : Controller
 {
-    // private readonly IMainUserInfo _mainUserInfoRepository;
-    // public HomeController(IMainUserInfo mainUserInfoRepository)
-    // {
-    //     _mainUserInfoRepository = mainUserInfoRepository;
-    // }
+    private readonly IMainUserInfo _mainUserInfoRepository;
+    public HomeController(IMainUserInfo mainUserInfoRepository)
+    {
+        _mainUserInfoRepository = mainUserInfoRepository;
+    }
 
     [Authorize]
     [Route("Home")]
     public IActionResult Index()
     {
-        // var homeUserInfo = new HomeViewModel
-        // {
-        //     mainUserInfo = _mainUserInfoRepository.getMainUserInfo,
-        // };
-        return View();
+        var homeUserInfo = new HomeViewModel
+        {
+            mainUserInfo = _mainUserInfoRepository.getMainUserInfo,
+        };
+        return View(homeUserInfo);
     }
 
     [Authorize]

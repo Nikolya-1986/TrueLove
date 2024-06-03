@@ -1,10 +1,10 @@
 using Love.DbContext;
+using Love.interfaces;
 using Love.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Love.Repositories
 {
-    public class UserInfoRepository
+    public class UserInfoRepository: IMainUserInfo
     {
         private readonly TrueLoveDbContext trueLoveDbContext;
         public UserInfoRepository(TrueLoveDbContext trueLoveDbContext)
@@ -12,9 +12,9 @@ namespace Love.Repositories
             this.trueLoveDbContext = trueLoveDbContext;
         }
 
-        // public IEnumerable<MainUserInfo> getMainUserInfo
-        // {
-        //     get => trueLoveDbContext.MainUserInfo.ToList();
-        // }
+        public IEnumerable<MainUserInfo> getMainUserInfo
+        {
+            get => trueLoveDbContext.MainUserInfo.ToList();
+        }
     }
 }

@@ -13,11 +13,18 @@ namespace Love.DbContext
             _options = options;
         }
 
+        public DbSet<MainUserInfo>? MainUserInfo { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<MainUserInfo>(entity =>
+            {
+                entity.Property(prop => prop.userName)
+                .IsRequired()
+                .HasMaxLength(30);
+            });
             base.OnModelCreating(modelBuilder);
         }
 
-        // public DbSet<MainUserInfo>? MainUserInfo { get; set; }
     }
 }

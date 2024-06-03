@@ -1,0 +1,26 @@
+@model MainUserInfo
+@{
+    ViewData["Title"] = "Main info about user";
+}
+
+<h1>
+    @ViewData["Title"]
+</h1>
+
+<div>
+    <h3>
+        Don't change info
+    </h3>
+    <ul>
+        <li>
+            Private key: @Model.Id
+        </li>
+        <li>
+            User name: @Model.userName
+        </li>
+        <li>
+            User email: @Model.userEmail
+        </li>
+    </ul>
+
+</div>

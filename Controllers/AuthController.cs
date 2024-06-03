@@ -42,11 +42,11 @@ namespace Love.Controllers
                     await _signInManager.SignInAsync(user, false);
                     var mainUserInfo =  new MainUserInfo()
                     {
-                        userId = Guid.NewGuid(),
+                        Id = Guid.NewGuid(),
                         userEmail = model.Email,
                         userName = model.Name,
                     };
-                    // _trueLoveDbContext.MainUserInfo.Add(mainUserInfo);
+                    _trueLoveDbContext.MainUserInfo.Add(mainUserInfo);
                     return RedirectToAction("index", "Home");
                 }
                 
