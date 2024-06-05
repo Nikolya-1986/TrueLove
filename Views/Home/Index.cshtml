@@ -1,16 +1,18 @@
-﻿@model Love.ViewModels.HomeViewModel
+﻿@model HomeViewModel
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">
+<div>
+    <h1 class="text-center display-3">
         @ViewData["Title"]
     </h1>
-    @{
-        foreach(MainUserInfo mainUserInfo in Model.mainUserInfo) {
-            @Html.Partial("MainUserInfo", mainUserInfo)
+    <div>
+        @{
+            foreach(MainUserInfo userInfo in Model.mainUserInfo) {
+                @Html.Partial("MainUserInfo", userInfo)
+            }
         }
-    }
+    </div>
 </div>

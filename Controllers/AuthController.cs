@@ -43,10 +43,15 @@ namespace Love.Controllers
                     var mainUserInfo =  new MainUserInfo()
                     {
                         Id = Guid.NewGuid(),
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
                         userEmail = model.Email,
                         userName = model.Name,
                     };
+                    #pragma warning disable CS8602 // Dereference of a possibly null reference.
                     _trueLoveDbContext.MainUserInfo.Add(mainUserInfo);
+                    #pragma warning restore CS8602 // Dereference of a possibly null reference.
+                    _trueLoveDbContext.SaveChanges();
                     return RedirectToAction("index", "Home");
                 }
                 

@@ -21,7 +21,7 @@ public class HomeController : Controller
     {
         var homeUserInfo = new HomeViewModel
         {
-            mainUserInfo = _mainUserInfoRepository.getMainUserInfo,
+            mainUserInfo = _mainUserInfoRepository.getMainUserInfo.OrderBy(item => item.Id),
         };
         return View(homeUserInfo);
     }
