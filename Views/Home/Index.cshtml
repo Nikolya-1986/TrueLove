@@ -9,10 +9,6 @@
         @ViewData["Title"]
     </h1>
     <div>
-        @{
-            foreach(MainUserInfo userInfo in Model.mainUserInfo) {
-                @Html.Partial("MainUserInfo", userInfo)
-            }
-        }
+        @Html.Partial("MainUserInfo", Model.mainUserInfo)
     </div>
 </div>

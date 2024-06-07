@@ -10,6 +10,7 @@ namespace Love.Controllers;
 public class HomeController : Controller
 {
     private readonly IMainUserInfo _mainUserInfoRepository;
+    
     public HomeController(IMainUserInfo mainUserInfoRepository)
     {
         _mainUserInfoRepository = mainUserInfoRepository;
@@ -17,11 +18,12 @@ public class HomeController : Controller
 
     [Authorize]
     [Route("Home")]
-    public IActionResult Index()
+    public IActionResult Index(string? UserEmail = null)
     {
+        var currentUser = _mainUserInfoRepository.getMainUserInfo(UserEmail);
         var homeUserInfo = new HomeViewModel
         {
-            mainUserInfo = _mainUserInfoRepository.getMainUserInfo.OrderBy(item => item.Id),
+            mainUserInfo = currentUser,
         };
         return View(homeUserInfo);
     }

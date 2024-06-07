@@ -12,9 +12,14 @@ namespace Love.Repositories
             this.trueLoveDbContext = trueLoveDbContext;
         }
 
-        public IEnumerable<MainUserInfo> getMainUserInfo
+        public IEnumerable<MainUserInfo> AllUserInfo
         {
             get => trueLoveDbContext.MainUserInfo.ToList();
+        }
+
+        public MainUserInfo getMainUserInfo(string UserEmail)
+        {
+            return trueLoveDbContext.MainUserInfo.FirstOrDefault(item => item.userEmail == UserEmail);
         }
     }
 }

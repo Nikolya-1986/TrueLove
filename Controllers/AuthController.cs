@@ -80,7 +80,7 @@ namespace Love.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home", new { UserEmail = model.Email });
                 }
                 ModelState.AddModelError(string.Empty, "Invalid credentails");
             }

@@ -4,6 +4,7 @@ namespace Love.interfaces
 {
     public interface IMainUserInfo
     {
-        IEnumerable<MainUserInfo> getMainUserInfo { get; }
+        IEnumerable<MainUserInfo> AllUserInfo { get; }
+        MainUserInfo getMainUserInfo(string UserEmail);
     }
 }

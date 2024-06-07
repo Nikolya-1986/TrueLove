@@ -4,6 +4,6 @@ namespace Love.ViewModels
 {
     public class HomeViewModel
     {
-        public IEnumerable<MainUserInfo>? mainUserInfo { get; set; }
+        public MainUserInfo? mainUserInfo { get; set; }
     }
 }
