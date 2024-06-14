@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using Microsoft.Extensions.Configuration;
 using Love.interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -30,7 +29,7 @@ namespace Love.Services
 
         public string GenerateRefreshToken()
         {
-            var randomNumber = new byte[32];
+            var randomNumber = new byte[128];
             using (var rng = RandomNumberGenerator.Create())
             {
                 rng.GetBytes(randomNumber);
