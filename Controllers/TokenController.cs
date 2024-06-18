@@ -46,8 +46,6 @@ namespace Love.Controllers
         [HttpPost, Authorize]
         public async Task<IActionResult> Revoke()
         {
-            // var userName = User.Identity.Name;
-
             var user = _DbContext.MainUserInfo.SingleOrDefault(item => item.userName == userName);
             if (user == null) return BadRequest();
 

@@ -1,9 +1,12 @@
+using System.Text;
 using Love.DbContext;
 using Love.interfaces;
 using Love.Repositories;
 using Love.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
