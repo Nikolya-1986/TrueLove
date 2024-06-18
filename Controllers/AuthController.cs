@@ -1,5 +1,8 @@
+using System.Security.Claims;
 using Love.DbContext;
+using Love.interfaces;
 using Love.Models;
+using Love.Services;
 using Love.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,11 +16,13 @@ namespace Love.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly TrueLoveDbContext _trueLoveDbContext;
-        public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, TrueLoveDbContext trueLoveDbContext)
+        private readonly IToken _tokenService;
+        public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, TrueLoveDbContext trueLoveDbContext, IToken tokenService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _trueLoveDbContext = trueLoveDbContext;
+            _tokenService = tokenService;
         }
     
         [HttpGet]
@@ -78,6 +83,7 @@ namespace Love.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                HandleTokens(model);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home", new { UserEmail = model.Email });
@@ -92,6 +98,21 @@ namespace Love.Controllers
             await _signInManager.SignOutAsync();
 
             return RedirectToAction("Login");
+        }
+
+        private async void HandleTokens(LoginViewModel model)
+        {
+            var user = _trueLoveDbContext.MainUserInfo.SingleOrDefault(item => item.userEmail == model.Email);
+            var userClaims = new []
+            {
+                new Claim(ClaimTypes.Name, user.userName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            };
+            var accessToken = _tokenService.GenerateAccessToken(userClaims);
+            var refreshToken = _tokenService.GenerateRefreshToken();
+            user.AccessToken = accessToken;
+            user.RefreshToken = refreshToken;
+            await _trueLoveDbContext.SaveChangesAsync();
         }
     }
 }

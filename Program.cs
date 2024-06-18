@@ -1,8 +1,12 @@
+using System.Text;
 using Love.DbContext;
 using Love.interfaces;
 using Love.Repositories;
+using Love.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +16,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<TrueLoveDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TrueLoveConnection")));
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<TrueLoveDbContext>();
 builder.Services.AddTransient<IMainUserInfo, UserInfoRepository>();
+builder.Services.AddTransient<IToken, TokenService>();
 builder.Services.ConfigureApplicationCookie(config => {
     config.LoginPath = "/Login";
 });
